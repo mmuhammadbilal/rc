@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Teams from '../components/Teams';
 import Footer from '../components/Footer';
-import Schedule from '../components/schedule';
+import Schedule from '../components/Schedule';
 import PointsTable from '../components/pointable';
 import ContactPage from '../components/contactus';
 import StatsPage from '../components/playerstat';

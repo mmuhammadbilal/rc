@@ -24,7 +24,7 @@ const TeamInfo = ({ teamName, onBack }) => {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:5000/api/teams?name=${encodeURIComponent(teamName)}`
+          `${import.meta.env.VITE_API_URL}/api/teams?name=${encodeURIComponent(teamName)}`
         );
         if (!res.ok) throw new Error("Failed to fetch team data");
         const data = await res.json();
