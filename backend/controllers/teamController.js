@@ -1,4 +1,4 @@
-import Team from "../models/team.js";
+import Team from "../models/Team.js";
 
 // Helper function to validate squad length
 const validateSquad = (squad) => Array.isArray(squad) && squad.length === 15;

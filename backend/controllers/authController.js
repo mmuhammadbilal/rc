@@ -1,4 +1,4 @@
-import User from "../models/user.js"; // Capital 'U' + include ".js"
+import User from "../models/User.js"; // Capital 'U' + include ".js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
