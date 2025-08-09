@@ -17,7 +17,12 @@ app.use(cors({
   origin: '*',
 }));
 
-
+app.get('/',(req,res)=>{
+  res.send({
+    activeStatus:true,
+    error:false,
+  })
+})
 // All Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/teams', teamRoutes);
