@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+
+
+import { useState,useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -34,7 +36,7 @@ function Register() {
     }
 
     try {
-      const res = await axios.post("${import.meta.env.VITE_API_URL}/api/auth/register", form);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, form);
       alert("Registered successfully. Please log in.");
       navigate("/Login");
     } catch (err) {

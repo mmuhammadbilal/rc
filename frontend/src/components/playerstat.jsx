@@ -25,9 +25,9 @@ const StatsPage = () => {
     const fetchStats = async () => {
   try {
     const [battersRes, bowlersRes, allroundersRes] = await Promise.all([
-  fetch("${import.meta.env.VITE_API_URL}/api/stats/top?type=Batsman"),   // capital B
-  fetch("${import.meta.env.VITE_API_URL}/api/stats/top?type=Bowler"),
-  fetch("${import.meta.env.VITE_API_URL}/api/stats/top?type=Allrounder"),
+  fetch(`${import.meta.env.VITE_API_URL}/api/stats/top?type=Batsman`),   // capital B
+  fetch(`${import.meta.env.VITE_API_URL}/api/stats/top?type=Bowler`),
+  fetch(`${import.meta.env.VITE_API_URL}/api/stats/top?type=Allrounder`),
 ]);
 
 const batters = await battersRes.json();

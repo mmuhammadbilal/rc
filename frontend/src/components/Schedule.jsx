@@ -6,7 +6,7 @@ const Schedule = () => {
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/matches");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/matches`);
         if (!res.ok) throw new Error("Failed to fetch matches");
         const data = await res.json();
         setMatches(data);

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -23,7 +24,7 @@ function Login() {
     if (!validate()) return;
 
     try {
-      const res = await axios.post("${import.meta.env.VITE_API_URL}/api/auth/login", form);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, form);
       login(res.data);
       navigate(res.data.user.role === "admin" ? "/admin-dashboard" : "/home");
     } catch (err) {

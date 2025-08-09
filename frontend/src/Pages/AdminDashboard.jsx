@@ -55,7 +55,7 @@ const AdminDashboard = () => {
     submissionData.append('bestAllrounders', JSON.stringify(formData.bestAllrounders));
 
     try {
-      await axios.post('${import.meta.env.VITE_API_URL}/api/match/full', submissionData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/match/full`, submissionData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert('Match submitted successfully!');

@@ -20,7 +20,7 @@ const PointsTable = () => {
   useEffect(() => {
     const fetchPoints = async () => {
       try {
-        const res = await fetch('${import.meta.env.VITE_API_URL}/api/points');
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/points`);
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         setTeams(data);
