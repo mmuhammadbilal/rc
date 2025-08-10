@@ -6,6 +6,7 @@ const categories = [
   { name: "Top Bowlers", key: "bowlers" },
   { name: "All-Rounders", key: "allrounders" },
   { name: "Best Bowling", key: "bestbowling" },
+  { name: "Best Batting", key: "bestbatting" },
 ];
 
 const StatsPage = () => {
@@ -15,9 +16,14 @@ const StatsPage = () => {
     bowlers: [],
     allrounders: [],
     bestbowling: [
-      // { name: "Mitchell Starc", country: "Australia", stat: "6/28 vs NZ" },
-      // { name: "Mohammed Shami", country: "India", stat: "5/35 vs ENG" },
-      // { name: "Anrich Nortje", country: "SA", stat: "5/42 vs PAK" },
+      { name: "J BUMRAH", country: "INDIA", stat: "4/0 vs AUS" },
+      { name: "M MIRAZ", country: "BANGLADESH", stat: "4/2 vs PAK" },
+      { name: "M MONDOL", country: "SA", stat: "4/3 vs SA" },
+    ],
+    bestbatting: [
+      { name: "G MAXWELL", country: "AUSTRALIA", stat: "57 vs ENG" },
+      { name: "F ZAMAN", country: "PAKISTAN", stat: "40 vs IND" },
+      { name: "J ROY", country: "ENGLAND", stat: "33 vs AUS" },
     ],
   });
 
@@ -41,7 +47,8 @@ setData({
   batters: batters.map((p) => ({ name: p.playerName, country: p.team, stat: `Runs: ${p.runs}` })),
   bowlers: bowlers.map((p) => ({ name: p.playerName, country: p.team, stat: `Wickets: ${p.wickets}` })),
   allrounders: allrounders.map((p) => ({ name: p.playerName, country: p.team, stat: `Runs: ${p.runs}, Wkts: ${p.wickets}` })),
-  bestbowling: data.bestbowling // keep existing
+  bestbowling: data.bestbowling,
+  bestbatting: data.bestbatting// keep existing
 });
 
   } catch (err) {
