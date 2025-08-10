@@ -22,8 +22,9 @@ const StatsPage = () => {
     ],
     bestbatting: [
       { name: "G MAXWELL", country: "AUSTRALIA", stat: "57 vs ENG" },
-      { name: "F ZAMAN", country: "PAKISTAN", stat: "40 vs IND" },
-      { name: "J ROY", country: "ENGLAND", stat: "33 vs AUS" },
+    
+      { name: "M RIZWAN", country: "PAKISTAN", stat: "41 vs SA" },
+        { name: "F ZAMAN", country: "PAKISTAN", stat: "40 vs IND" },
     ],
   });
 
