@@ -1,13 +1,10 @@
-
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-import TournamentModal from "../components/TournamentModal";
-function Login() {
-  onst [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showTournamentModal, setShowTournamentModal] = useState(false);
 
+function Login() {
+  
   const [form, setForm] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
@@ -31,8 +28,7 @@ function Login() {
       login(res.data);
       
       navigate(res.data.user.role === "admin" ? "/admin-dashboard" : "/home");
-      setIsLoggedIn(true);
-    setShowTournamentModal(true);
+      
     } catch (err) {
       alert("Login failed. Please check your credentials.");
     }
@@ -41,9 +37,10 @@ function Login() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center px-4"
-      style={{
-        backgroundImage: `url('https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8yM19waG90b19vZl9jbG9zZV91cF9zaG90X29mX2FfYmFzZWJhbGxfb25fZmlyZV8wZTliMGQ1Yy02OTFjLTRkZTgtOTljOC0zMjQ3OTgzZjU2OTdfMS5qcGc.jpg')`,
-      }}
+     style={{
+  backgroundImage: "url('https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8yM19waG90b19vZl9jbG9zZV91cF9zaG90X29mX2FfYmFzZWJhbGxfb25fZmlyZV8wZTliMGQ1Yy02OTFjLTRkZTgtOTljOC0zMjQ3OTgzZjU2OTdfMS5qcGc.jpg')"
+}}
+
     >
       <div className="bg-white/30 backdrop-blur-md p-8 rounded-2xl shadow-lg max-w-md w-full border border-white/50">
         <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-lg">
@@ -103,8 +100,6 @@ function Login() {
         </p>
       </div>
 
-      {/* Show the Tournament Modal after login */}
-      {showTournamentModal && <TournamentModal />}
     </div>
   );
 }

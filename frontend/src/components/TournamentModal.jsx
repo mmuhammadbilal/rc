@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
+import { BsTrophy } from "react-icons/bs";
+import { IoTimeOutline } from "react-icons/io5";
 
 const TournamentModal = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -8,66 +11,36 @@ const TournamentModal = () => {
   const slideData = [
     {
       id: 1,
-      title: "Tournament Deadline Alert!",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-12 h-12 text-yellow-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a1 1 0 00.86 1.5h18.64a1 1 0 00.86-1.5L13.71 3.86a1 1 0 00-1.72 0z" />
-        </svg>
-      ),
+      title: "🚨 League Matches Deadline Alert!",
+      icon: <FaExclamationTriangle className="text-7xl text-yellow-300 drop-shadow-gold animate-bounce" />,
       content: "13 August, Wednesday, 5:00 PM",
-      subContent: "India and Pakistan are out of the tournament",
-      bgColor: "bg-gradient-to-br from-yellow-600 via-orange-600 to-red-700",
+      subContent: "India and Pakistan out from Tournament",
+      bgColor: "bg-gradient-to-br from-[#3a0d0d] via-[#7a1010] to-[#ff1a1a]",
       textColor: "text-yellow-200"
     },
     {
       id: 2,
-      title: "Qualifier & Eliminator Schedule",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-12 h-12 text-cyan-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      content: "Wednesday: 6:00 PM - 11:59 PM",
+      title: "⏳ Qualifier & Eliminator Timeline",
+      icon: <IoTimeOutline className="text-7xl text-cyan-300 drop-shadow-gold animate-spin-slow" />,
+      content: "13 AUG Wednesday: 6:00 PM – 11:59 PM",
       subContent: "2-hour grace period available",
-      bgColor: "bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900",
-      textColor: "text-cyan-300"
+      bgColor: "bg-gradient-to-br from-[#001f29] via-[#004d61] to-[#00b8d9]",
+      textColor: "text-cyan-200"
     },
     {
       id: 3,
-      title: "🔥 Grand Final",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-12 h-12 text-yellow-300"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 2L15.09 8.26l6.91.64-5.27 4.73L18.18 22 12 18.27 5.82 22l1.45-8.37L2 8.9l6.91-.64L12 2z" />
-        </svg>
-      ),
+      title: "🏆 Grand Final",
+      icon: <BsTrophy className="text-7xl text-yellow-300 drop-shadow-gold animate-pulse" />,
       content: "14 August",
-      subContent: "Epic 3-match series awaits!",
-      bgColor: "bg-gradient-to-br from-purple-900 via-fuchsia-800 to-indigo-800",
-      textColor: "text-pink-300"
+      subContent: "Epic 3-match series!",
+      bgColor: "bg-gradient-to-br from-[#2c003e] via-[#4b0082] to-[#d400d4]",
+      textColor: "text-pink-200"
     }
   ];
 
   useEffect(() => {
-    setSlides([...slideData].sort(() => Math.random() - 0.5));
+    const shuffledSlides = [...slideData].sort(() => Math.random() - 0.5);
+    setSlides(shuffledSlides);
   }, []);
 
   useEffect(() => {
@@ -77,23 +50,26 @@ const TournamentModal = () => {
     return () => clearInterval(timer);
   }, [slides.length]);
 
+  const closeModal = () => setIsOpen(false);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Background */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center font-serif">
+      {/* Dim royal background */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-md"
-        onClick={() => setIsOpen(false)}
+        className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+        onClick={closeModal}
       />
-      {/* Modal */}
-      <div className="relative w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
-        {/* Close Button */}
+
+      {/* Royal modal container */}
+      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl border-4 border-yellow-400 shadow-[0_0_60px_rgba(255,215,0,0.9)] animate-fadeInScale">
+        {/* Close button */}
         <button
-          onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-2 transition"
+          onClick={closeModal}
+          className="absolute right-4 top-4 z-10 rounded-full bg-yellow-500/20 p-2 text-yellow-300 hover:bg-yellow-500/40 transition"
         >
-          ✕
+          <FaTimes className="text-2xl" />
         </button>
 
         {/* Slides */}
@@ -101,29 +77,33 @@ const TournamentModal = () => {
           {slides.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-0 flex flex-col items-center justify-center p-8 text-center transition-all duration-700 ease-in-out transform ${
-                index === currentSlide
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 translate-x-full"
-              } ${slide.bgColor}`}
+              className={`absolute inset-0 transform transition-all duration-700 ease-in-out ${slide.bgColor} ${
+                index === currentSlide ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+              }`}
             >
-              <div className="mb-4">{slide.icon}</div>
-              <h2 className={`text-2xl font-extrabold drop-shadow-lg ${slide.textColor}`}>
-                {slide.title}
-              </h2>
-              <p className="mt-2 text-3xl font-bold text-white drop-shadow-sm">{slide.content}</p>
-              <p className="mt-1 text-lg text-white/90">{slide.subContent}</p>
+              <div className="flex h-full flex-col items-center justify-center p-8 text-center">
+                <div className="mb-6">{slide.icon}</div>
+                <h2 className={`mb-4 text-4xl font-extrabold tracking-widest ${slide.textColor} drop-shadow-gold`}>
+                  {slide.title}
+                </h2>
+                <p className="mb-2 text-3xl font-black text-white drop-shadow-lg">
+                  {slide.content}
+                </p>
+                <p className="text-lg text-yellow-100 italic">{slide.subContent}</p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Dots */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+        {/* Indicators */}
+        <div className="absolute bottom-5 left-0 right-0 flex justify-center gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`h-2 w-2 rounded-full transition-all ${
-                index === currentSlide ? "bg-white w-4" : "bg-white/50"
+              className={`h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide
+                  ? "bg-yellow-300 w-6 shadow-[0_0_10px_gold]"
+                  : "bg-yellow-300/50 w-3 hover:bg-yellow-400"
               }`}
               onClick={() => setCurrentSlide(index)}
             />
