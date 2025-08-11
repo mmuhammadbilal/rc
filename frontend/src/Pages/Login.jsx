@@ -3,8 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-
+import TournamentModal from "../components/TournamentModal";
 function Login() {
+  onst [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showTournamentModal, setShowTournamentModal] = useState(false);
+
   const [form, setForm] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
@@ -26,7 +29,10 @@ function Login() {
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, form);
       login(res.data);
+      
       navigate(res.data.user.role === "admin" ? "/admin-dashboard" : "/home");
+      setIsLoggedIn(true);
+    setShowTournamentModal(true);
     } catch (err) {
       alert("Login failed. Please check your credentials.");
     }
@@ -45,25 +51,39 @@ function Login() {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-  <label className="block text-sm font-semibold text-gray-700 mb-1">Name</label>
-  <input
-    type="text"
-    placeholder="Enter your name"
-    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-    onChange={(e) => setForm({ ...form, username: e.target.value })}
-  />
-  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-</div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              onChange={(e) =>
+                setForm({ ...form, username: e.target.value })
+              }
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
+          </div>
 
           <div>
-            <label className="block text-sm font-semibold text-white mb-1">Password</label>
+            <label className="block text-sm font-semibold text-white mb-1">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Enter your password"
               className="w-full px-4 py-2 rounded-md border border-gray-300 bg-white/80 text-gray-900 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, password: e.target.value })
+              }
             />
-            {errors.password && <p className="text-red-200 text-xs mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-200 text-xs mt-1">
+                {errors.password}
+              </p>
+            )}
           </div>
           <button
             type="submit"
@@ -74,13 +94,18 @@ function Login() {
         </form>
         <p className="text-center text-sm text-white mt-4 drop-shadow">
           Don't have an account?{" "}
-          <Link to="/register" className="text-white font-semibold underline hover:text-purple-200">
+          <Link
+            to="/register"
+            className="text-white font-semibold underline hover:text-purple-200"
+          >
             Register here
           </Link>
         </p>
       </div>
+
+      {/* Show the Tournament Modal after login */}
+      {showTournamentModal && <TournamentModal />}
     </div>
   );
 }
-
 export default Login;
