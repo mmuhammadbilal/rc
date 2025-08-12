@@ -121,6 +121,7 @@ const Super4PointsTable = () => {
       title="Qualifier 1" 
       team1={{ name: "BAN" }} 
       team2={{ name: "NZ" }} 
+      winner={{ name: "NZ" }} 
     />
 
     {/* Eliminator 1 */}
@@ -133,7 +134,7 @@ const Super4PointsTable = () => {
     {/* Eliminator 2 */}
     <FixtureBox
       title="Eliminator 2"
-      team1={{ name: "Qualifier Loser" }}
+      team1={{ name: "BAN" }}
       team2={{ name: "Eliminator 1 Winner" }}
     />
   </div>
