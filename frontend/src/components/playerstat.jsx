@@ -19,11 +19,21 @@ const StatsPage = () => {
       { name: "M MONDOL", country: "BAN", stat: "5/5 vs AUS" },
       { name: "J BUMRAH", country: "IND", stat: "4/0 vs AUS" },
       { name: "M MIRAZ", country: "BAN", stat: "4/2 vs PAK" },
+      { name: "M MONDOL", country: "BAN", stat: "4/3 vs SA" },
+        { name: "R AHMED", country: "ENG", stat: "4/6 vs IND" },
+       { name: "R AHMED", country: "ENG", stat: "3/0 vs PAK" },
+         { name: "L WOOD", country: "ENG", stat: "3/0 vs WI" },
+         { name: "R ASHWIN", country: "IND", stat: "3/2 vs PAK" },
     ],
     bestbatting: [
-      { name: "G MAXWELL", country: "AUSTRALIA", stat: "57 vs ENG" },
-      { name: "M RIZWAN", country: "PAKISTAN", stat: "41 vs SA" },
-      { name: "F ZAMAN", country: "PAKISTAN", stat: "40 vs IND" },
+      { name: "G MAXWELL", country: "AUS", stat: "57 vs ENG" },
+      { name: "M RIZWAN", country: "PAK", stat: "41 vs SA" },
+      { name: "F ZAMAN", country: "PAK", stat: "40 vs IND" },
+       { name: "H ALI", country: "PAK", stat: "41 vs BAN" },
+        { name: "C LYNN", country: "AUS", stat: "37 vs IND" },
+         { name: "I KAYES", country: "BAN", stat: "34 vs WI" },
+          { name: "J ROY", country: "ENG", stat: "33 vs AUS" },
+           { name: "MAHMUDULLAH", country: "BAN", stat: "30 vs SA" },
     ],
   });
 
@@ -109,52 +119,78 @@ const StatsPage = () => {
       </div>
 
       {/* Player Cards */}
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto z-10 relative">
-        {data[activeTab]?.map((player, index) => {
-          const isTop3 = index < 3 && isTopCategory;
+      {isTopCategory ? (
+        <>
+          {/* Top 3 in 3 columns */}
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-8">
+            {data[activeTab]?.slice(0, 3).map((player, index) => (
+              <div
+                key={index}
+                className="backdrop-blur-md rounded-2xl border border-white/20 shadow-xl bg-white/10 p-6 hover:shadow-yellow-400/20 transition-all"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-bold text-2xl text-yellow-300">
+                    #{index + 1}
+                  </span>
+                  <span className="rounded-full text-sm px-3 py-1 bg-yellow-400 text-black">
+                    {player.country}
+                  </span>
+                </div>
+                <h2 className="font-semibold text-white text-xl">{player.name}</h2>
+                <p className="mt-1 font-medium text-yellow-200 text-lg">
+                  {player.stat}
+                </p>
+              </div>
+            ))}
+          </div>
 
-          return (
+          {/* Remaining cards in 4 columns */}
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            {data[activeTab]?.slice(3).map((player, index) => (
+              <div
+                key={index + 3}
+                className="backdrop-blur-md rounded-xl border border-white/20 shadow-lg bg-white/5 p-4 scale-95 transition-all"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-bold text-lg text-yellow-200">
+                    #{index + 4}
+                  </span>
+                  <span className="rounded-full text-xs px-2 py-0.5 bg-yellow-300/80 text-black">
+                    {player.country}
+                  </span>
+                </div>
+                <h2 className="font-semibold text-white text-base">{player.name}</h2>
+                <p className="mt-1 font-medium text-yellow-200 text-sm">
+                  {player.stat}
+                </p>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        // For non-top categories, show all in 4 columns
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          {data[activeTab]?.map((player, index) => (
             <div
               key={index}
-              className={`backdrop-blur-md rounded-2xl border border-white/20 shadow-xl transition-all 
-              ${isTop3 ? "bg-white/10 p-6 hover:shadow-yellow-400/20" : "bg-white/5 p-4 scale-95"}`}
+              className="backdrop-blur-md rounded-xl border border-white/20 shadow-lg bg-white/5 p-4 scale-95 transition-all"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span
-                  className={`font-bold ${
-                    isTop3 ? "text-2xl text-yellow-300" : "text-lg text-yellow-200"
-                  }`}
-                >
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-bold text-lg text-yellow-200">
                   #{index + 1}
                 </span>
-                <span
-                  className={`rounded-full ${
-                    isTop3
-                      ? "text-sm px-3 py-1 bg-yellow-400 text-black"
-                      : "text-xs px-2 py-0.5 bg-yellow-300/80 text-black"
-                  }`}
-                >
+                <span className="rounded-full text-xs px-2 py-0.5 bg-yellow-300/80 text-black">
                   {player.country}
                 </span>
               </div>
-              <h2
-                className={`font-semibold text-white ${
-                  isTop3 ? "text-xl" : "text-base"
-                }`}
-              >
-                {player.name}
-              </h2>
-              <p
-                className={`mt-1 font-medium text-yellow-200 ${
-                  isTop3 ? "text-lg" : "text-sm"
-                }`}
-              >
+              <h2 className="font-semibold text-white text-base">{player.name}</h2>
+              <p className="mt-1 font-medium text-yellow-200 text-sm">
                 {player.stat}
               </p>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
