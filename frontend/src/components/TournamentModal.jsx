@@ -13,8 +13,8 @@ const TournamentModal = () => {
       id: 1,
       title: "🚨 League Matches Deadline Alert!",
       icon: <FaExclamationTriangle className="text-7xl text-yellow-300 drop-shadow-gold animate-bounce" />,
-      content: "13 August, Wednesday, 5:00 PM",
-      subContent: "India and Pakistan out from Tournament",
+      content: "12 August, Tuesday, 5:00 PM",
+      subContent: "India,Pakistan Southafrica and WI out from Tournament",
       bgColor: "bg-gradient-to-br from-[#3a0d0d] via-[#7a1010] to-[#ff1a1a]",
       textColor: "text-yellow-200"
     },
@@ -22,7 +22,7 @@ const TournamentModal = () => {
       id: 2,
       title: "⏳ Qualifier & Eliminator Timeline",
       icon: <IoTimeOutline className="text-7xl text-cyan-300 drop-shadow-gold animate-spin-slow" />,
-      content: "13 AUG Wednesday: 6:00 PM – 11:59 PM",
+      content: "12 AUG Tuesday : 6:00 PM – 11:59 PM",
       subContent: "2-hour grace period available",
       bgColor: "bg-gradient-to-br from-[#001f29] via-[#004d61] to-[#00b8d9]",
       textColor: "text-cyan-200"
@@ -31,7 +31,7 @@ const TournamentModal = () => {
       id: 3,
       title: "🏆 Grand Final",
       icon: <BsTrophy className="text-7xl text-yellow-300 drop-shadow-gold animate-pulse" />,
-      content: "14 August",
+      content: "13 August",
       subContent: "Epic 3-match series!",
       bgColor: "bg-gradient-to-br from-[#2c003e] via-[#4b0082] to-[#d400d4]",
       textColor: "text-pink-200"

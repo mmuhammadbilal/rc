@@ -16,9 +16,10 @@ const StatsPage = () => {
     bowlers: [],
     allrounders: [],
     bestbowling: [
-      { name: "J BUMRAH", country: "INDIA", stat: "4/0 vs AUS" },
-      { name: "M MIRAZ", country: "BANGLADESH", stat: "4/2 vs PAK" },
-      { name: "M MONDOL", country: "SA", stat: "4/3 vs SA" },
+       { name: "M MONDOL", country: "BAN", stat: "5/5 vs AUS" },
+      { name: "J BUMRAH", country: "IND", stat: "4/0 vs AUS" },
+      { name: "M MIRAZ", country: "BAN", stat: "4/2 vs PAK" },
+     
     ],
     bestbatting: [
       { name: "G MAXWELL", country: "AUSTRALIA", stat: "57 vs ENG" },

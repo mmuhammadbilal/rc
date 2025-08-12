@@ -75,28 +75,43 @@ const PointsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {teams.map((team, index) => (
-                <tr key={team._id || index} className="hover:bg-white/5 transition-all duration-300">
-                  <td className="py-4 px-6 font-bold text-pink-300">{index + 1}</td>
-                  <td className="py-4 px-6 flex items-center gap-3 font-semibold">
-                    <img
-                      src={`https://flagsapi.com/${countryCodes[team.teamName] || 'UN'}/flat/32.png`}
-                      alt={team.teamName}
-                      className="w-6 h-6 rounded-full"
-                    />
-                    {team.teamName}
-                  </td>
-                  <td className="py-4 px-6 text-center">{team.matches}</td>
-                  <td className="py-4 px-6 text-center text-green-400 font-bold">{team.win}</td>
-                  <td className="py-4 px-6 text-center text-red-400 font-bold">{team.loss}</td>
-                  <td className="py-4 px-6 text-center ">{team.tie}</td>
-                <td className="py-4 px-6 text-center">
-  {Number(team.runRate).toFixed(1)}
-</td>
+              {teams.map((team, index) => {
+                const isQualified = index < 4;
+                const isEliminated = index >= teams.length - 4;
 
-                  <td className="py-4 px-6 text-center text-yellow-400 font-extrabold">{team.points}</td>
-                </tr>
-              ))}
+                return (
+                  <tr
+                    key={team._id || index}
+                    className={`hover:bg-white/5 transition-all duration-300 ${
+                      isQualified ? 'bg-green-900/30' : isEliminated ? 'bg-red-900/30' : ''
+                    }`}
+                  >
+                    <td className="py-4 px-6 font-bold text-pink-300 flex items-center gap-2">
+                      {index + 1}
+                      {isQualified && (
+                        <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">Q</span>
+                      )}
+                      {isEliminated && (
+                        <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">E</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-6 flex items-center gap-3 font-semibold">
+                      <img
+                        src={`https://flagsapi.com/${countryCodes[team.teamName] || 'UN'}/flat/32.png`}
+                        alt={team.teamName}
+                        className="w-6 h-6 rounded-full"
+                      />
+                      {team.teamName}
+                    </td>
+                    <td className="py-4 px-6 text-center">{team.matches}</td>
+                    <td className="py-4 px-6 text-center text-green-400 font-bold">{team.win}</td>
+                    <td className="py-4 px-6 text-center text-red-400 font-bold">{team.loss}</td>
+                    <td className="py-4 px-6 text-center">{team.tie}</td>
+                    <td className="py-4 px-6 text-center">{Number(team.runRate).toFixed(1)}</td>
+                    <td className="py-4 px-6 text-center text-yellow-400 font-extrabold">{team.points}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
