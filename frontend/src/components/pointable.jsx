@@ -33,7 +33,6 @@ const PointsTable = () => {
 
   return (
     <section className="relative min-h-screen py-16 px-4 sm:px-6 lg:px-20 bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] overflow-hidden">
-
       {/* 🏏 Background Cricket Touch */}
       <img
         src="https://chatgpt-image-store.s3.amazonaws.com/cricket-ball-pro-max.png"
@@ -76,26 +75,22 @@ const PointsTable = () => {
             </thead>
             <tbody>
               {teams.map((team, index) => {
-                const isQualified = index < 4;
-                const isEliminated = index >= teams.length - 4;
+                const positionLabel =
+                  index < 4
+                    ? `Q${index + 1}` // Top 4 get Q
+                    : index >= teams.length - 4
+                    ? `E${index + 1}` // Bottom 4 get E
+                    : `${index + 1}`; // Others normal
 
                 return (
                   <tr
                     key={team._id || index}
-                    className={`hover:bg-white/5 transition-all duration-300 ${
-                      isQualified ? 'bg-green-900/30' : isEliminated ? 'bg-red-900/30' : ''
-                    }`}
+                    className="hover:bg-white/5 transition-all duration-300"
                   >
-                    <td className="py-4 px-6 font-bold text-pink-300 flex items-center gap-2">
-                      {index + 1}
-                      {isQualified && (
-                        <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">Q</span>
-                      )}
-                      {isEliminated && (
-                        <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">E</span>
-                      )}
+                    <td className="py-4 px-6 font-bold text-pink-300 whitespace-nowrap">
+                      {positionLabel}
                     </td>
-                    <td className="py-4 px-6 flex items-center gap-3 font-semibold">
+                    <td className="py-4 px-6 flex items-center gap-3 font-semibold whitespace-nowrap">
                       <img
                         src={`https://flagsapi.com/${countryCodes[team.teamName] || 'UN'}/flat/32.png`}
                         alt={team.teamName}
@@ -108,7 +103,9 @@ const PointsTable = () => {
                     <td className="py-4 px-6 text-center text-red-400 font-bold">{team.loss}</td>
                     <td className="py-4 px-6 text-center">{team.tie}</td>
                     <td className="py-4 px-6 text-center">{Number(team.runRate).toFixed(1)}</td>
-                    <td className="py-4 px-6 text-center text-yellow-400 font-extrabold">{team.points}</td>
+                    <td className="py-4 px-6 text-center text-yellow-400 font-extrabold">
+                      {team.points}
+                    </td>
                   </tr>
                 );
               })}
