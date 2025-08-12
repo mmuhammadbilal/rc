@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Super4PointsTable from './Super4pointstable';
 
 // Map backend team names to country codes for flag URLs
 const countryCodes = {
@@ -15,6 +16,7 @@ const countryCodes = {
 
 const PointsTable = () => {
   const [teams, setTeams] = useState([]);
+  const [showSuper4, setShowSuper4] = useState(false);
 
   // Fetch points table from backend
   useEffect(() => {
@@ -57,62 +59,76 @@ const PointsTable = () => {
         🏆 RC World Cup 2025 - Points Table
       </motion.h2>
 
-      {/* 📊 Table */}
-      <div className="max-w-6xl mx-auto overflow-x-auto relative z-10">
-        <div className="backdrop-blur-2xl bg-white/10 border border-white/20 shadow-xl rounded-xl overflow-hidden">
-          <table className="min-w-full text-white">
-            <thead className="bg-white/10 border-b border-white/20">
-              <tr>
-                <th className="py-4 px-6 text-left">#</th>
-                <th className="py-4 px-6 text-left">Team</th>
-                <th className="py-4 px-6 text-center">P</th>
-                <th className="py-4 px-6 text-center">W</th>
-                <th className="py-4 px-6 text-center">L</th>
-                <th className="py-4 px-6 text-center">Tie</th>
-                <th className="py-4 px-6 text-center">NRR</th>
-                <th className="py-4 px-6 text-center">Points</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teams.map((team, index) => {
-                const positionLabel =
-                  index < 4
-                    ? `Q${index + 1}` // Top 4 get Q
-                    : index >= teams.length - 4
-                    ? `E${index + 1}` // Bottom 4 get E
-                    : `${index + 1}`; // Others normal
-
-                return (
-                  <tr
-                    key={team._id || index}
-                    className="hover:bg-white/5 transition-all duration-300"
-                  >
-                    <td className="py-4 px-6 font-bold text-pink-300 whitespace-nowrap">
-                      {positionLabel}
-                    </td>
-                    <td className="py-4 px-6 flex items-center gap-3 font-semibold whitespace-nowrap">
-                      <img
-                        src={`https://flagsapi.com/${countryCodes[team.teamName] || 'UN'}/flat/32.png`}
-                        alt={team.teamName}
-                        className="w-6 h-6 rounded-full"
-                      />
-                      {team.teamName}
-                    </td>
-                    <td className="py-4 px-6 text-center">{team.matches}</td>
-                    <td className="py-4 px-6 text-center text-green-400 font-bold">{team.win}</td>
-                    <td className="py-4 px-6 text-center text-red-400 font-bold">{team.loss}</td>
-                    <td className="py-4 px-6 text-center">{team.tie}</td>
-                    <td className="py-4 px-6 text-center">{Number(team.runRate).toFixed(1)}</td>
-                    <td className="py-4 px-6 text-center text-yellow-400 font-extrabold">
-                      {team.points}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+      {/* Toggle Button */}
+      <div className="text-center mt-6">
+        <button
+          onClick={() => setShowSuper4(!showSuper4)}
+          className="bg-gradient-to-r from-red-500 to-yellow-500 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:opacity-90 transition"
+        >
+          {showSuper4 ? "Hide Super 4 Table" : "Show Super 4 Table"}
+        </button>
       </div>
+
+      {/* Conditionally Show Super 4 Table OR Main Table */}
+      {showSuper4 ? (
+        <Super4PointsTable />
+      ) : (
+        <div className="max-w-6xl mx-auto overflow-x-auto relative z-10 mt-8">
+          <div className="backdrop-blur-2xl bg-white/10 border border-white/20 shadow-xl rounded-xl overflow-hidden">
+            <table className="min-w-full text-white">
+              <thead className="bg-white/10 border-b border-white/20">
+                <tr>
+                  <th className="py-4 px-6 text-left">#</th>
+                  <th className="py-4 px-6 text-left">Team</th>
+                  <th className="py-4 px-6 text-center">P</th>
+                  <th className="py-4 px-6 text-center">W</th>
+                  <th className="py-4 px-6 text-center">L</th>
+                  <th className="py-4 px-6 text-center">Tie</th>
+                  <th className="py-4 px-6 text-center">NRR</th>
+                  <th className="py-4 px-6 text-center">Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                {teams.map((team, index) => {
+                  const positionLabel =
+                    index < 4
+                      ? `Q${index + 1}`
+                      : index >= teams.length - 4
+                      ? `E${index + 1}`
+                      : `${index + 1}`;
+
+                  return (
+                    <tr
+                      key={team._id || index}
+                      className="hover:bg-white/5 transition-all duration-300"
+                    >
+                      <td className="py-4 px-6 font-bold text-pink-300 whitespace-nowrap">
+                        {positionLabel}
+                      </td>
+                      <td className="py-4 px-6 flex items-center gap-3 font-semibold whitespace-nowrap">
+                        <img
+                          src={`https://flagsapi.com/${countryCodes[team.teamName] || 'UN'}/flat/32.png`}
+                          alt={team.teamName}
+                          className="w-6 h-6 rounded-full"
+                        />
+                        {team.teamName}
+                      </td>
+                      <td className="py-4 px-6 text-center">{team.matches}</td>
+                      <td className="py-4 px-6 text-center text-green-400 font-bold">{team.win}</td>
+                      <td className="py-4 px-6 text-center text-red-400 font-bold">{team.loss}</td>
+                      <td className="py-4 px-6 text-center">{team.tie}</td>
+                      <td className="py-4 px-6 text-center">{Number(team.runRate).toFixed(1)}</td>
+                      <td className="py-4 px-6 text-center text-yellow-400 font-extrabold">
+                        {team.points}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
