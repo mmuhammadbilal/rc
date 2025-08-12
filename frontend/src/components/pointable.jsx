@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import Super4PointsTable from './Super4pointstable';
+import Super4PointsTable from './Super4';
 
 // Map backend team names to country codes for flag URLs
 const countryCodes = {
