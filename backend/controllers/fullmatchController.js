@@ -2,6 +2,7 @@ import Match from '../models/Match.js';
 import PlayerStats from '../models/PlayerStats.js';
 import PointsTable from '../models/PointsTable.js';
 import Schedule from '../models/Schedule.js';
+import Super4Points from '../models/Super4.js';
 import multer from 'multer';
 
 const storage = multer.memoryStorage();
@@ -27,12 +28,11 @@ export const submitFullMatch = async (req, res) => {
 
     const screenshot = req.file;
 
-    // Parse all players arrays (with team info from frontend)
     const bestBatters = JSON.parse(req.body.bestBatters || '[]');
     const bestBowlers = JSON.parse(req.body.bestBowlers || '[]');
     const bestAllrounders = JSON.parse(req.body.bestAllrounders || '[]');
 
-    // Save match
+    // 1️⃣ Save match
     const match = new Match({
       teamA,
       teamB,
@@ -46,15 +46,15 @@ export const submitFullMatch = async (req, res) => {
     });
     await match.save();
 
-    // Save ALL 4 players instead of only top 3
+    // 2️⃣ Save player stats
     const updatePlayers = async (players, role) => {
       for (let p of players) {
-        if (!p.name) continue; // skip empty rows
+        if (!p.name) continue;
         await PlayerStats.findOneAndUpdate(
           { playerName: p.name, role },
           {
             playerName: p.name,
-            team: p.team || null, // comes from frontend
+            team: p.team || null,
             role,
             $inc: {
               runs: Number(p.runs) || 0,
@@ -71,60 +71,72 @@ export const submitFullMatch = async (req, res) => {
     await updatePlayers(bestBowlers, "Bowler");
     await updatePlayers(bestAllrounders, "Allrounder");
 
-    // Run rate difference
+    // 3️⃣ Run rate calculation
     const calculateRunRateDiff = (runsFor, oversFor, runsAgainst, oversAgainst) => {
       const rrFor = runsFor / oversFor;
       const rrAgainst = runsAgainst / oversAgainst;
       return rrFor - rrAgainst;
     };
 
-    // Points table update
-    const updateTeamPoints = async (teamName, isWinner, isTie, rrDiff) => {
-      const existing = await PointsTable.findOne({ teamName });
+    // 4️⃣ Update points table (league stage)
+    const updateTeamPoints = async (model, teamName, isWinner, isTie, rrDiff) => {
+      const existing = await model.findOne({ teamName });
       const updated = {
         matches: (existing?.matches || 0) + 1,
-        win: (existing?.win || 0) + (isWinner ? 1 : 0),
-        loss: (existing?.loss || 0) + (!isWinner && !isTie ? 1 : 0),
-        tie: (existing?.tie || 0) + (isTie ? 1 : 0),
+        wins: (existing?.wins || existing?.win || 0) + (isWinner ? 1 : 0),
+        losses: (existing?.losses || existing?.loss || 0) + (!isWinner && !isTie ? 1 : 0),
+        ties: (existing?.ties || existing?.tie || 0) + (isTie ? 1 : 0),
         points: (existing?.points || 0) + (isWinner ? 2 : isTie ? 1 : 0),
-        runRate: (existing?.runRate || 0) + rrDiff,
+        netRunRate: (existing?.netRunRate || existing?.runRate || 0) + rrDiff,
       };
-      await PointsTable.findOneAndUpdate({ teamName }, updated, { upsert: true });
+      await model.findOneAndUpdate({ teamName }, updated, { upsert: true });
     };
 
     const isTie = winner?.toLowerCase() === 'tie';
 
-    if (!isTie) {
-      const rrDiffTeamA = calculateRunRateDiff(
-        parseInt(teamAScore),
-        parseFloat(teamAOvers),
-        parseInt(teamBScore),
-        parseFloat(teamBOvers)
-      );
+    const rrDiffTeamA = calculateRunRateDiff(
+      parseInt(teamAScore),
+      parseFloat(teamAOvers),
+      parseInt(teamBScore),
+      parseFloat(teamBOvers)
+    );
 
-      const rrDiffTeamB = calculateRunRateDiff(
-        parseInt(teamBScore),
-        parseFloat(teamBOvers),
-        parseInt(teamAScore),
-        parseFloat(teamAOvers)
-      );
+    const rrDiffTeamB = calculateRunRateDiff(
+      parseInt(teamBScore),
+      parseFloat(teamBOvers),
+      parseInt(teamAScore),
+      parseFloat(teamAOvers)
+    );
 
-      if (teamA === winner) {
-        await updateTeamPoints(teamA, true, false, rrDiffTeamA);
-        await updateTeamPoints(teamB, false, false, rrDiffTeamB);
-      } else {
-        await updateTeamPoints(teamA, false, false, rrDiffTeamA);
-        await updateTeamPoints(teamB, true, false, rrDiffTeamB);
-      }
+    if (isTie) {
+      await updateTeamPoints(PointsTable, teamA, false, true, 0);
+      await updateTeamPoints(PointsTable, teamB, false, true, 0);
+
+      // Super 4 table tie update
+      await updateTeamPoints(Super4Points, teamA, false, true, 0);
+      await updateTeamPoints(Super4Points, teamB, false, true, 0);
     } else {
-      await updateTeamPoints(teamA, false, true, 0);
-      await updateTeamPoints(teamB, false, true, 0);
+      if (teamA === winner) {
+        await updateTeamPoints(PointsTable, teamA, true, false, rrDiffTeamA);
+        await updateTeamPoints(PointsTable, teamB, false, false, rrDiffTeamB);
+
+        // Super 4 table
+        await updateTeamPoints(Super4Points, teamA, true, false, rrDiffTeamA);
+        await updateTeamPoints(Super4Points, teamB, false, false, rrDiffTeamB);
+      } else {
+        await updateTeamPoints(PointsTable, teamA, false, false, rrDiffTeamA);
+        await updateTeamPoints(PointsTable, teamB, true, false, rrDiffTeamB);
+
+        // Super 4 table
+        await updateTeamPoints(Super4Points, teamA, false, false, rrDiffTeamA);
+        await updateTeamPoints(Super4Points, teamB, true, false, rrDiffTeamB);
+      }
     }
 
-    // Mark schedule as completed
+    // 5️⃣ Mark schedule completed
     await Schedule.findOneAndUpdate({ match: match._id }, { status: 'Completed' });
 
-    res.status(201).json({ msg: 'Match recorded successfully.' });
+    res.status(201).json({ msg: 'Match recorded successfully (Points + Super 4 updated).' });
   } catch (err) {
     console.error('❌ Match Submission Error:', err);
     res.status(500).json({ error: err.message });
