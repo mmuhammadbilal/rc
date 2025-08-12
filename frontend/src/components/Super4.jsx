@@ -59,7 +59,7 @@ const FixtureBox = ({ title, team1, team2, highlight, winner }) => (
     <div className="mt-4 text-center">
       {winner ? (
         <span className="px-4 py-1 text-sm font-bold text-black bg-yellow-400 rounded-full">
-          Winner: {winner}
+          Winner: {winner.name}
         </span>
       ) : (
         <span className="px-4 py-1 text-sm font-bold text-yellow-300 border border-yellow-300/40 rounded-full">
