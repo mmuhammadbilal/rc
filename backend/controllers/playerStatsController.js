@@ -25,9 +25,9 @@ export const getTopPlayers = async (req, res) => {
     let players = [];
 
     if (type === 'Batsman') {
-      players = await PlayerStats.find({ role: 'Batsman' }).sort({ runs: -1 }).limit(3);
+      players = await PlayerStats.find({ role: 'Batsman' }).sort({ runs: -1 }).limit(11);
     } else if (type === 'Bowler') {
-      players = await PlayerStats.find({ role: 'Bowler' }).sort({ wickets: -1 }).limit(3);
+      players = await PlayerStats.find({ role: 'Bowler' }).sort({ wickets: -1 }).limit(11);
     } else if (type === 'Allrounder') {
       const WICKET_WEIGHT = 10; // adjust this as you see fit
 
@@ -44,7 +44,7 @@ players = await PlayerStats.aggregate([
     }
   },
   { $sort: { performanceScore: -1 } },
-  { $limit: 3 }
+  { $limit: 11}
 ]);
 
     } else {
