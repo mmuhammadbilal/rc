@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import Allrounder from '../components/Allrounder';
 const AdminDashboard = () => {
   const [formData, setFormData] = useState({
     teamA: '',
@@ -68,6 +68,7 @@ const AdminDashboard = () => {
   return (
     <form onSubmit={handleSubmit} className="p-6 space-y-4 max-w-2xl mx-auto bg-white shadow rounded">
       <h2 className="text-xl font-bold">Submit Match Details</h2>
+<Allrounder playerName="JASON ROY" teamName="England" />
 
       {/* Match Info */}
       <input type="text" name="teamA" placeholder="Team A" value={formData.teamA} onChange={handleChange} required />

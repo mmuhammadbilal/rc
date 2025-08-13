@@ -22,7 +22,7 @@ const Navbar = ({ onNavigate }) => {
     { name: "Points Table", page: "points" },
     { name: "Results", page: "schedule" },
     { name: "Stats", page: "playerstats" },
-    { name: "Contact", page: "contact" },
+    { name: "Certificates", page: "contact" },
   ];
 
   const handleClick = (page) => {
