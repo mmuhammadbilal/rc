@@ -21,9 +21,10 @@ const StatsPage = () => {
       { name: "M MIRAZ", country: "BAN", stat: "4/2 vs PAK" },
       { name: "M MONDOL", country: "BAN", stat: "4/3 vs SA" },
         { name: "R AHMED", country: "ENG", stat: "4/6 vs IND" },
+         { name: "A RASHID", country: "ENG", stat: "4/10 vs PAK" },
        { name: "R AHMED", country: "ENG", stat: "3/0 vs PAK" },
          { name: "L WOOD", country: "ENG", stat: "3/0 vs WI" },
-         { name: "R ASHWIN", country: "IND", stat: "3/2 vs PAK" },
+        
     ],
     bestbatting: [
       { name: "G MAXWELL", country: "AUS", stat: "57 vs ENG" },

@@ -129,21 +129,23 @@ const Super4PointsTable = () => {
       title="Eliminator 1" 
       team1={{ name: "ENG" }} 
       team2={{ name: "AUS" }} 
+       winner={{ name: "ENG" }} 
     />
 
     {/* Eliminator 2 */}
     <FixtureBox
       title="Eliminator 2"
       team1={{ name: "BAN" }}
-      team2={{ name: "Eliminator 1 Winner" }}
+      team2={{ name: "ENG" }}
+       winner={{ name: "BAN" }} 
     />
   </div>
 
   {/* Final */}
   <FixtureBox
     title="🏆 Final"
-    team1={{ name: "TBD" }}
-    team2={{ name: "TBD" }}
+    team1={{ name: "NZ" }}
+    team2={{ name: "BAN" }}
     highlight
   />
 </div>
