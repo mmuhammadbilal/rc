@@ -1,9 +1,9 @@
 import React from "react";
 
-import Champion from "./champion";
+import Champion from "./Champ";
 import Runnerup from "./Runnerup";
 import Playert from "./Playert";
-import Batter from "./batter";
+import Batter from "./BatT";
 import Bowler from "./Bowler";
 import Allrounder from "./Allrounder";
 import Battingteam from "./Battingteam";
