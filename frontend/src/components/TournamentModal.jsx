@@ -11,19 +11,19 @@ const TournamentModal = () => {
   const slideData = [
     {
       id: 1,
-      title: "🚨 League Matches Deadline Alert!",
+      title: "🚨 RC WORLDCUP LEAGUE MATCHES!",
       icon: <FaExclamationTriangle className="text-7xl text-yellow-300 drop-shadow-gold animate-bounce" />,
-      content: "12 August, Tuesday, 5:00 PM",
-      subContent: "India,Pakistan Southafrica and WI out from Tournament",
+      content: "17-22 August, FRIDAY, 3:00 PM",
+      subContent: "READY FOR EXCITING TOURNAMENT......",
       bgColor: "bg-gradient-to-br from-[#3a0d0d] via-[#7a1010] to-[#ff1a1a]",
       textColor: "text-yellow-200"
     },
     {
       id: 2,
-      title: "⏳ Qualifier & Eliminator Timeline",
+      title: "⏳ SUPER 6 STAGE",
       icon: <IoTimeOutline className="text-7xl text-cyan-300 drop-shadow-gold animate-spin-slow" />,
-      content: "12 AUG Tuesday : 6:00 PM – 11:59 PM",
-      subContent: "2-hour grace period available",
+      content: "22-24 AUG SUNDAY : 6:00 PM ",
+      subContent: "EVERY TEAM PLAY WITH OTHER TEAM , EACH TEAM PLAY 5 MATCHES",
       bgColor: "bg-gradient-to-br from-[#001f29] via-[#004d61] to-[#00b8d9]",
       textColor: "text-cyan-200"
     },
@@ -31,8 +31,8 @@ const TournamentModal = () => {
       id: 3,
       title: "🏆 Grand Final",
       icon: <BsTrophy className="text-7xl text-yellow-300 drop-shadow-gold animate-pulse" />,
-      content: "13 August",
-      subContent: "Epic 3-match series!",
+      content: "24 August ,SUNDAY  8-12 PM",
+      subContent: "Between TOP-2 Teams Of SUPER 6!",
       bgColor: "bg-gradient-to-br from-[#2c003e] via-[#4b0082] to-[#d400d4]",
       textColor: "text-pink-200"
     }
