@@ -79,18 +79,30 @@ export const submitFullMatch = async (req, res) => {
     };
 
     // 4️⃣ Update points table (league stage)
-    const updateTeamPoints = async (model, teamName, isWinner, isTie, rrDiff) => {
-      const existing = await model.findOne({ teamName });
-      const updated = {
-        matches: (existing?.matches || 0) + 1,
-        wins: (existing?.wins || existing?.win || 0) + (isWinner ? 1 : 0),
-        losses: (existing?.losses || existing?.loss || 0) + (!isWinner && !isTie ? 1 : 0),
-        ties: (existing?.ties || existing?.tie || 0) + (isTie ? 1 : 0),
-        points: (existing?.points || 0) + (isWinner ? 2 : isTie ? 1 : 0),
-        netRunRate: (existing?.netRunRate || existing?.runRate || 0) + rrDiff,
-      };
-      await model.findOneAndUpdate({ teamName }, updated, { upsert: true });
+// 4️⃣ Update points table (league stage)
+const updateTeamPoints = async (model, teamName, isWinner, isTie, rrDiff) => {
+  try {
+    const existing = await model.findOne({ teamName });
+
+    // Always use consistent field names
+    const updated = {
+      matches: (existing?.matches || 0) + 1,
+      win: (existing?.win || 0) + (isWinner ? 1 : 0),
+      loss: (existing?.loss || 0) + (!isWinner && !isTie ? 1 : 0),
+      tie: (existing?.tie || 0) + (isTie ? 1 : 0),
+      points: (existing?.points || 0) + (isWinner ? 2 : isTie ? 1 : 0),
+      runRate: parseFloat(((existing?.runRate || 0) + rrDiff).toFixed(3)), // keep decimals clean
     };
+
+    await model.findOneAndUpdate(
+      { teamName },
+      { $set: updated },   // replace only with our consistent structure
+      { upsert: true, new: true }
+    );
+  } catch (error) {
+    console.error("Error updating team points:", error);
+  }
+};
 
     const isTie = winner?.toLowerCase() === 'tie';
 
@@ -112,24 +124,24 @@ export const submitFullMatch = async (req, res) => {
       await updateTeamPoints(PointsTable, teamA, false, true, 0);
       await updateTeamPoints(PointsTable, teamB, false, true, 0);
 
-      // Super 4 table tie update
-      await updateTeamPoints(Super4Points, teamA, false, true, 0);
-      await updateTeamPoints(Super4Points, teamB, false, true, 0);
+      // // Super 4 table tie update
+      // await updateTeamPoints(Super4Points, teamA, false, true, 0);
+      // await updateTeamPoints(Super4Points, teamB, false, true, 0);
     } else {
       if (teamA === winner) {
         await updateTeamPoints(PointsTable, teamA, true, false, rrDiffTeamA);
         await updateTeamPoints(PointsTable, teamB, false, false, rrDiffTeamB);
 
-        // Super 4 table
-        await updateTeamPoints(Super4Points, teamA, true, false, rrDiffTeamA);
-        await updateTeamPoints(Super4Points, teamB, false, false, rrDiffTeamB);
+        // // Super 4 table
+        // await updateTeamPoints(Super4Points, teamA, true, false, rrDiffTeamA);
+        // await updateTeamPoints(Super4Points, teamB, false, false, rrDiffTeamB);
       } else {
         await updateTeamPoints(PointsTable, teamA, false, false, rrDiffTeamA);
         await updateTeamPoints(PointsTable, teamB, true, false, rrDiffTeamB);
 
-        // Super 4 table
-        await updateTeamPoints(Super4Points, teamA, false, false, rrDiffTeamA);
-        await updateTeamPoints(Super4Points, teamB, true, false, rrDiffTeamB);
+        // // Super 4 table
+        // await updateTeamPoints(Super4Points, teamA, false, false, rrDiffTeamA);
+        // await updateTeamPoints(Super4Points, teamB, true, false, rrDiffTeamB);
       }
     }
 
