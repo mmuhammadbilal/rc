@@ -91,11 +91,11 @@ const PointsTable = () => {
               <tbody>
                 {teams.map((team, index) => {
                   const positionLabel =
-                    index < 4
-                      ? `Q${index + 1}`
-                      : index >= teams.length - 4
-                      ? `E${index + 1}`
-                      : `${index + 1}`;
+                    // index < 4
+                    //   ? `Q${index + 1}`
+                    //   : index >= teams.length - 4
+                    //   ? `E${index + 1}`
+                      `${index + 1}`;
 
                   return (
                     <tr
