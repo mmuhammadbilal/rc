@@ -65,7 +65,7 @@ const PointsTable = () => {
           onClick={() => setShowSuper4(!showSuper4)}
           className="bg-gradient-to-r from-red-500 to-yellow-500 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:opacity-90 transition"
         >
-          {showSuper4 ? "Hide Super 4 Table" : "Show Super 4 Table"}
+          {showSuper4 ? "Hide Super 6 Table" : "Show Super 6 Table"}
         </button>
       </div>
 
