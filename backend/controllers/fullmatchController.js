@@ -125,23 +125,23 @@ const updateTeamPoints = async (model, teamName, isWinner, isTie, rrDiff) => {
       await updateTeamPoints(PointsTable, teamB, false, true, 0);
 
       // // Super 4 table tie update
-      // await updateTeamPoints(Super4Points, teamA, false, true, 0);
-      // await updateTeamPoints(Super4Points, teamB, false, true, 0);
+      await updateTeamPoints(Super4Points, teamA, false, true, 0);
+      await updateTeamPoints(Super4Points, teamB, false, true, 0);
     } else {
       if (teamA === winner) {
         await updateTeamPoints(PointsTable, teamA, true, false, rrDiffTeamA);
         await updateTeamPoints(PointsTable, teamB, false, false, rrDiffTeamB);
 
         // // Super 4 table
-        // await updateTeamPoints(Super4Points, teamA, true, false, rrDiffTeamA);
-        // await updateTeamPoints(Super4Points, teamB, false, false, rrDiffTeamB);
+        await updateTeamPoints(Super4Points, teamA, true, false, rrDiffTeamA);
+        await updateTeamPoints(Super4Points, teamB, false, false, rrDiffTeamB);
       } else {
         await updateTeamPoints(PointsTable, teamA, false, false, rrDiffTeamA);
         await updateTeamPoints(PointsTable, teamB, true, false, rrDiffTeamB);
 
         // // Super 4 table
-        // await updateTeamPoints(Super4Points, teamA, false, false, rrDiffTeamA);
-        // await updateTeamPoints(Super4Points, teamB, true, false, rrDiffTeamB);
+        await updateTeamPoints(Super4Points, teamA, false, false, rrDiffTeamA);
+        await updateTeamPoints(Super4Points, teamB, true, false, rrDiffTeamB);
       }
     }
 
