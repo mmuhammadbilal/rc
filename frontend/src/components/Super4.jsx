@@ -114,9 +114,9 @@ const Super4PointsTable = () => {
       className="max-w-7xl mx-auto mt-10 space-y-12"
     >
       {/* Fixture Chart */}
-<div className="flex flex-col items-center space-y-8">
+{/* <div className="flex flex-col items-center space-y-8">
   <div className="flex justify-center gap-20 flex-wrap relative">
-    {/* Qualifier 1 */}
+ 
     <FixtureBox 
       title="Qualifier 1" 
       team1={{ name: "BAN" }} 
@@ -124,7 +124,7 @@ const Super4PointsTable = () => {
       winner={{ name: "NZ" }} 
     />
 
-    {/* Eliminator 1 */}
+   
     <FixtureBox 
       title="Eliminator 1" 
       team1={{ name: "ENG" }} 
@@ -132,7 +132,7 @@ const Super4PointsTable = () => {
        winner={{ name: "ENG" }} 
     />
 
-    {/* Eliminator 2 */}
+   
     <FixtureBox
       title="Eliminator 2"
       team1={{ name: "BAN" }}
@@ -141,14 +141,14 @@ const Super4PointsTable = () => {
     />
   </div>
 
-  {/* Final */}
+
   <FixtureBox
     title="🏆 Final"
     team1={{ name: "NZ" }}
     team2={{ name: "BAN" }}
     highlight
   />
-</div>
+</div> */}
 
 
       {/* Points Table */}
@@ -157,7 +157,7 @@ const Super4PointsTable = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-[#1a1033] via-[#332255] to-[#0b0f2b] py-5 text-center border-b border-yellow-500/40 relative">
             <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 drop-shadow-[0_0_20px_gold] tracking-widest uppercase">
-              👑 Super 4 Points Table
+              👑 Super 6 Points Table
             </h2>
             <motion.div
               animate={{ x: ["-100%", "100%"] }}
@@ -214,20 +214,20 @@ const Super4PointsTable = () => {
                         <Tooltip
                           id={`tooltip-${index}`}
                           place="right"
-                          content={`Wins: ${team.wins}, Losses: ${team.losses}`}
+                          content={`Wins: ${team.win}, Losses: ${team.loss}`}
                         />
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center">
                         {team.matches}
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center text-green-400 font-bold">
-                        {team.wins}
+                        {team.win}
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center text-red-400 font-bold">
-                        {team.losses}
+                        {team.loss}
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center">
-                        {parseFloat(team.netRunRate).toFixed(2)}
+                        {parseFloat(team.RunRate).toFixed(2)}
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center text-yellow-400 font-extrabold">
                         {team.points}
@@ -240,7 +240,7 @@ const Super4PointsTable = () => {
                       colSpan="7"
                       className="text-center p-6 font-bold text-yellow-400"
                     >
-                      No Super 4 data available.
+                      No Super 6 data available.
                     </td>
                   </tr>
                 )}
