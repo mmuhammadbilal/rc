@@ -227,7 +227,7 @@ const Super4PointsTable = () => {
                         {team.loss}
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center">
-                        {parseFloat(team.RunRate).toFixed(2)}
+                        {parseFloat(team.runRate).toFixed(2)}
                       </td>
                       <td className="p-4 border border-yellow-400/20 text-center text-yellow-400 font-extrabold">
                         {team.points}
