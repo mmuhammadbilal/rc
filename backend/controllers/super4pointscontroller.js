@@ -13,18 +13,18 @@ export const getSuper4Points= async (req, res) => {
 // 📌 UPDATE/ADD Super 4 Points
 export const updateSuper4Points = async (req, res) => {
   try {
-    const { teamName, matches, wins, losses, ties, points, netRunRate } = req.body;
+    const { teamName, matches, win, loss, tie, points, runRate } = req.body;
 
     let team = await Super4Points.findOne({ teamName });
 
     if (team) {
       // Update existing team
       team.matches = matches;
-      team.wins = wins;
-      team.losses = losses;
-      team.ties = ties;
+      team.win = win;
+      team.loss = loss;
+      team.tie = tie;
       team.points = points;
-      team.netRunRate = netRunRate;
+      team.runRate = runRate;
       await team.save();
     } else {
       // Create new team
